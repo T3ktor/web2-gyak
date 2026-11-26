@@ -1,0 +1,39 @@
+<%- include("partials/header", { pageTitle: "Regisztráció" }) %>
+
+					<section>
+						<header class="main">
+							<h1>Regisztráció</h1>
+							<p>Hozzon létre új felhasználói fiókot! Az újonnan regisztrált fiókok alapértelmezetten <strong>regisztrált látogató (user)</strong> szerepkört kapnak.</p>
+						</header>
+
+						<div class="row">
+							<div class="col-6 col-12-small">
+								<form method="POST" action="/register" novalidate>
+									<div class="row gtr-uniform">
+										<div class="col-12">
+											<label for="username">Felhasználónév *</label>
+											<input type="text" name="username" id="username" value="<%= typeof formData !== 'undefined' && formData.username ? formData.username : '' %>" placeholder="Legalább 3 karakter" />
+											<% if (typeof errors !== 'undefined' && errors.username) { %>
+												<span class="field-error"><%= errors.username.message %></span>
+											<% } %>
+										</div>
+										<div class="col-12">
+											<label for="password">Jelszó *</label>
+											<input type="password" name="password" id="password" placeholder="Legalább 4 karakter" />
+											<% if (typeof errors !== 'undefined' && errors.password) { %>
+												<span class="field-error"><%= errors.password.message %></span>
+											<% } %>
+										</div>
+										<div class="col-12">
+											<ul class="actions">
+												<li><button type="submit" class="button primary">Regisztráció</button></li>
+												<li><a href="/login" class="button">Már van fiókom</a></li>
+											</ul>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</section>
+
+<%- include("partials/footer") %>

@@ -1,0 +1,20 @@
+<%- include("partials/header", { pageTitle: "Felhasználói oldal" }) %>
+
+					<section>
+						<header class="main">
+							<h1>Felhasználói irányítópult</h1>
+							<p>Üdvözöljük, <strong><%= user.username %></strong>! Ön <strong><%= user.role === 'admin' ? 'Adminisztrátor' : 'Regisztrált látogató' %></strong> szerepkörrel van bejelentkezve.</p>
+						</header>
+
+						<div class="box">
+							<h3>Elérhető funkciók bejelentkezett felhasználóként</h3>
+							<p>Bejelentkezett felhasználóként hozzáfér az <strong>Üzenetek</strong> menüponthoz, ahol megtekintheti a Kapcsolat űrlapon keresztül beküldött összes üzenetet fordított időrendi sorrendben.</p>
+							<ul class="actions">
+								<li><a href="/uzenetek" class="button primary">Üzenetek megtekintése</a></li>
+								<li><a href="/adatbazis" class="button">Adatbázis böngészése</a></li>
+								<li><a href="/diagram" class="button">Diagramok</a></li>
+							</ul>
+						</div>
+					</section>
+
+<%- include("partials/footer") %>

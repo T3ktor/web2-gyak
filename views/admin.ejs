@@ -1,0 +1,20 @@
+<%- include("partials/header", { pageTitle: "Admin oldal" }) %>
+
+					<section>
+						<header class="main">
+							<h1>Admin irányítópult</h1>
+							<p>Üdvözöljük, <strong><%= user.username %></strong>! Ön <strong>Adminisztrátor</strong> jogosultsággal lépett be.</p>
+						</header>
+
+						<div class="box">
+							<h3>Adminisztrátori műveletek</h3>
+							<p>Adminisztrátorként minden menüpont mellett eléri a <strong>CRUD (Sütemények)</strong> kezelőfelületet is, ahol új süteményeket vehet fel, módosíthatja vagy törölheti a meglévőket.</p>
+							<ul class="actions">
+								<li><a href="/crud" class="button primary">CRUD kezelőfelület megnyitása</a></li>
+								<li><a href="/uzenetek" class="button">Üzenetek megtekintése</a></li>
+								<li><a href="/adatbazis" class="button">Adatbázis</a></li>
+							</ul>
+						</div>
+					</section>
+
+<%- include("partials/footer") %>
