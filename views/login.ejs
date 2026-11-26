@@ -1,0 +1,33 @@
+<%- include("partials/header", { pageTitle: "Bejelentkezés" }) %>
+
+					<section>
+						<header class="main">
+							<h1>Bejelentkezés</h1>
+							<p>Jelentkezzen be fiókjával az Üzenetek megtekintéséhez vagy (admin jogosultsággal) a CRUD kezelőfelület eléréséhez.</p>
+						</header>
+
+						<div class="row">
+							<div class="col-6 col-12-small">
+								<form method="POST" action="/login">
+									<div class="row gtr-uniform">
+										<div class="col-12">
+											<label for="username">Felhasználónév</label>
+											<input type="text" name="username" id="username" placeholder="Felhasználónév" required />
+										</div>
+										<div class="col-12">
+											<label for="password">Jelszó</label>
+											<input type="password" name="password" id="password" placeholder="Jelszó" required />
+										</div>
+										<div class="col-12">
+											<ul class="actions">
+												<li><button type="submit" class="button primary">Bejelentkezés</button></li>
+												<li><a href="/register" class="button">Még nincs fiókom</a></li>
+											</ul>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</section>
+
+<%- include("partials/footer") %>
