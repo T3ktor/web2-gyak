@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="hu">
+	<head>
+		<title><%= typeof pageTitle !== "undefined" ? pageTitle + " | " : "" %>Édes Harmónia Cukrászda</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<link rel="stylesheet" href="/assets/css/custom.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+		<div id="wrapper">
+
+			<!-- Main -->
+			<div id="main">
+				<div class="inner">
+
+					<!-- Header -->
+					<header id="header">
+						<a href="/" class="logo"><strong>Édes Harmónia</strong> Cukrászda</a>
+						<div class="header-auth">
+							<% if (user) { %>
+								<span class="role-badge <%= user.role === 'admin' ? 'admin' : 'user' %>">
+									<%= user.username %> (<%= user.role === 'admin' ? 'Admin' : 'Felhasználó' %>)
+								</span>
+								<a href="/logout" class="button small">Kijelentkezés</a>
+							<% } else { %>
+								<a href="/login" class="button small">Bejelentkezés</a>
+								<a href="/register" class="button primary small">Regisztráció</a>
+							<% } %>
+						</div>
+					</header>
+
+					<% if (message) { %>
+						<div class="alert <%= messageType === 'error' ? 'alert-error' : 'alert-success' %>" style="margin-top: 1.5rem;">
+							<%= message %>
+						</div>
+					<% } %>

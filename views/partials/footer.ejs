@@ -1,0 +1,114 @@
+					<!-- Oldal alji labjec a keszitok adataival -->
+					<footer class="main-footer">
+						<div>
+							<strong>Készítették:</strong> Kovács Ákos (FIY9TP) &amp; Jónás Attila (Q7CJ2Z)
+						</div>
+						<div>
+							Web-programozás II. beadandó &bull; Téma: <a href="https://html5up.net/editorial" target="_blank" rel="noopener">Editorial by HTML5 UP</a>
+						</div>
+					</footer>
+
+				</div>
+			</div>
+
+			<!-- Sidebar -->
+			<div id="sidebar">
+				<div class="inner">
+
+					<!-- Kereso a sutemenyekhez -->
+					<section id="search" class="alt">
+						<form method="get" action="/adatbazis">
+							<input type="text" name="kereses" id="query" placeholder="Sütemény keresése..." value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>" />
+						</form>
+					</section>
+
+					<!-- Menu -->
+					<nav id="menu">
+						<header class="major">
+							<h2>Menü</h2>
+						</header>
+						<ul>
+							<li><a href="/" class="<%= currentPath === '/' ? 'active-nav' : '' %>">Főoldal</a></li>
+							<li><a href="/adatbazis" class="<%= currentPath === '/adatbazis' ? 'active-nav' : '' %>">Adatbázis</a></li>
+							<li><a href="/diagram" class="<%= currentPath === '/diagram' ? 'active-nav' : '' %>">Diagram</a></li>
+							<li><a href="/kapcsolat" class="<%= currentPath === '/kapcsolat' ? 'active-nav' : '' %>">Kapcsolat</a></li>
+							<% if (user) { %>
+								<li><a href="/uzenetek" class="<%= currentPath === '/uzenetek' ? 'active-nav' : '' %>">Üzenetek</a></li>
+							<% } %>
+							<% if (user && user.role === "admin") { %>
+								<li><a href="/crud" class="<%= currentPath.startsWith('/crud') ? 'active-nav' : '' %>">CRUD (Sütemények)</a></li>
+							<% } %>
+							<% if (!user) { %>
+								<li><a href="/login" class="<%= currentPath === '/login' ? 'active-nav' : '' %>">Bejelentkezés</a></li>
+								<li><a href="/register" class="<%= currentPath === '/register' ? 'active-nav' : '' %>">Regisztráció</a></li>
+							<% } else { %>
+								<li>
+									<span class="opener">Fiók: <%= user.username %></span>
+									<ul>
+										<% if (user.role === "admin") { %>
+											<li><a href="/admin">Admin irányítópult</a></li>
+										<% } else { %>
+											<li><a href="/user">Felhasználói profil</a></li>
+										<% } %>
+										<li><a href="/logout">Kijelentkezés</a></li>
+									</ul>
+								</li>
+							<% } %>
+						</ul>
+					</nav>
+
+					<!-- Oldalsav ajanlo -->
+					<section>
+						<header class="major">
+							<h2>Kiemelt kínálat</h2>
+						</header>
+						<div class="mini-posts">
+							<article>
+								<a href="/adatbazis?dijazott=1" class="image"><img src="/images/torta-card.jpg" alt="Díjazott torták" /></a>
+								<p>Fedezze fel a Magyarország Tortája versenyen díjazott különlegességeinket.</p>
+							</article>
+							<article>
+								<a href="/adatbazis?mentes=G" class="image"><img src="/images/mentes-card.jpg" alt="Mentes sütemények" /></a>
+								<p>Glutén-, laktóz- és hozzáadott cukormentes desszertek minden napra.</p>
+							</article>
+						</div>
+						<ul class="actions">
+							<li><a href="/adatbazis" class="button">Teljes kínálat</a></li>
+						</ul>
+					</section>
+
+					<!-- Elerhetoseg -->
+					<section>
+						<header class="major">
+							<h2>Elérhetőség</h2>
+						</header>
+						<p>Kérdése van egyedi tortarendeléssel vagy összetevőkkel kapcsolatban? Írjon nekünk!</p>
+						<ul class="contact">
+							<li class="icon solid fa-envelope"><a href="/kapcsolat">info@edesharmonia.hu</a></li>
+							<li class="icon solid fa-phone">+36 76 555-1234</li>
+							<li class="icon solid fa-home">6000 Kecskemét, Izsáki út 10.</li>
+						</ul>
+					</section>
+
+					<!-- Sidebar Footer -->
+					<footer id="footer">
+						<p class="copyright">
+							&copy; Kovács Ákos (FIY9TP) &amp; Jónás Attila (Q7CJ2Z).<br />
+							Design: <a href="https://html5up.net" target="_blank" rel="noopener">HTML5 UP</a>.
+						</p>
+					</footer>
+
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Scripts -->
+		<script src="/assets/js/jquery.min.js"></script>
+		<script src="/assets/js/browser.min.js"></script>
+		<script src="/assets/js/breakpoints.min.js"></script>
+		<script src="/assets/js/util.js"></script>
+		<script src="/assets/js/main.js"></script>
+
+	</body>
+</html>
