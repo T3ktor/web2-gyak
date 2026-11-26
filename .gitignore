@@ -1,0 +1,5 @@
+node_modules/
+.env
+_template_index.html
+_template_generic.html
+.DS_Store

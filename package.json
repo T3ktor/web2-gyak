@@ -1,0 +1,35 @@
+{
+  "name": "web2-cukraszda-nodejs",
+  "version": "1.0.0",
+  "description": "Web-programozas II. beadando - Cukraszda webalkalmazas (Node.js, Express, EJS, Mongoose, MongoDB Atlas)",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "seed": "node seed.js",
+    "preview": "node dev-preview.js"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "ejs",
+    "mongoose",
+    "mongodb",
+    "cukraszda"
+  ],
+  "author": "Kovács Ákos (FIY9TP), Jónás Attila (Q7CJ2Z)",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "connect-mongo": "^6.0.0",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "express-session": "^1.18.2",
+    "mongoose": "^8.19.3"
+  },
+  "devDependencies": {
+    "mongodb-memory-server": "^11.4.0",
+    "nodemon": "^3.1.11"
+  }
+}
