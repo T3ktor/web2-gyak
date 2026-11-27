@@ -1,0 +1,57 @@
+<%- include("partials/header", { pageTitle: "Üzenetek" }) %>
+
+					<section>
+						<header class="main">
+							<h1>Beérkezett üzenetek</h1>
+							<p>
+								A Kapcsolat űrlapon beküldött üzenetek listája <strong>fordított időrendben</strong> (a legfrissebb elől).
+								Ez az oldal csak bejelentkezett felhasználók számára érhető el.
+							</p>
+						</header>
+
+						<ul class="actions">
+							<li><a href="/kapcsolat" class="button primary small">Új üzenet írása</a></li>
+						</ul>
+
+						<div class="table-wrapper">
+							<table class="alt">
+								<thead>
+									<tr>
+										<th>Küldés ideje</th>
+										<th>Küldő neve</th>
+										<th>E-mail cím</th>
+										<th>Tárgy</th>
+										<th>Üzenet</th>
+									</tr>
+								</thead>
+								<tbody>
+									<% if (messages.length === 0) { %>
+										<tr>
+											<td colspan="5">Még nem érkezett üzenet.</td>
+										</tr>
+									<% } else { %>
+										<% messages.forEach(m => { %>
+											<tr>
+												<td style="white-space: nowrap;">
+													<%= new Date(m.kuldesIdeje).toLocaleString("hu-HU", {
+														year: "numeric",
+														month: "2-digit",
+														day: "2-digit",
+														hour: "2-digit",
+														minute: "2-digit",
+														second: "2-digit"
+													}) %>
+												</td>
+												<td><strong><%= m.nev %></strong></td>
+												<td><%= m.email %></td>
+												<td><%= m.targy %></td>
+												<td><%= m.uzenet %></td>
+											</tr>
+										<% }) %>
+									<% } %>
+								</tbody>
+							</table>
+						</div>
+					</section>
+
+<%- include("partials/footer") %>
