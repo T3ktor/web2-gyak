@@ -1,0 +1,122 @@
+<%- include("partials/header", { pageTitle: "Diagram" }) %>
+
+					<section>
+						<header class="main">
+							<h1>Cukrászda statisztikák – Chart.js diagramok</h1>
+							<p>
+								Az alábbi interaktív diagramok közvetlenül a MongoDB Atlas adatbázis
+								<code>sutik</code>, <code>arak</code> és <code>tartalmak</code> kollekcióinak valós adatai alapján készülnek a <strong>Chart.js</strong> könyvtárral.
+							</p>
+						</header>
+
+						<div class="charts-grid">
+							<div class="chart-card">
+								<h3>1. Sütemények száma típusonként</h3>
+								<div class="chart-wrapper">
+									<canvas id="typeCountChart"></canvas>
+								</div>
+							</div>
+
+							<div class="chart-card">
+								<h3>2. Átlagár típusonként (Ft)</h3>
+								<div class="chart-wrapper">
+									<canvas id="avgPriceChart"></canvas>
+								</div>
+							</div>
+
+							<div class="chart-card">
+								<h3>3. Díjazott vs. hagyományos sütemények</h3>
+								<div class="chart-wrapper">
+									<canvas id="awardChart"></canvas>
+								</div>
+							</div>
+
+							<div class="chart-card">
+								<h3>4. Mentes összetevők megoszlása</h3>
+								<div class="chart-wrapper">
+									<canvas id="mentesChart"></canvas>
+								</div>
+							</div>
+						</div>
+					</section>
+
+					<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+					<script>
+						const chartData = <%- JSON.stringify(chartData) %>;
+
+						const palette = [
+							"#f56a6a", "#3b82f6", "#10b981", "#f59e0b", "#8b5cf6",
+							"#ec4899", "#14b8a6", "#6366f1", "#ef4444", "#84cc16"
+						];
+
+						new Chart(document.getElementById("typeCountChart"), {
+							type: "bar",
+							data: {
+								labels: chartData.typeLabels,
+								datasets: [{
+									label: "Sütemények száma (db)",
+									data: chartData.typeCounts,
+									backgroundColor: "#f56a6a",
+									borderRadius: 4
+								}]
+							},
+							options: {
+								responsive: true,
+								maintainAspectRatio: false,
+								plugins: { legend: { display: false } },
+								scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
+							}
+						});
+
+						new Chart(document.getElementById("avgPriceChart"), {
+							type: "bar",
+							data: {
+								labels: chartData.priceLabels,
+								datasets: [{
+									label: "Átlagár (Ft)",
+									data: chartData.avgPrices,
+									backgroundColor: "#3b82f6",
+									borderRadius: 4
+								}]
+							},
+							options: {
+								indexAxis: "y",
+								responsive: true,
+								maintainAspectRatio: false,
+								plugins: { legend: { display: false } },
+								scales: { x: { beginAtZero: true } }
+							}
+						});
+
+						new Chart(document.getElementById("awardChart"), {
+							type: "doughnut",
+							data: {
+								labels: ["Díjazott sütemény", "Hagyományos sütemény"],
+								datasets: [{
+									data: [chartData.awardedCount, chartData.nonAwardedCount],
+									backgroundColor: ["#f59e0b", "#cbd5e1"]
+								}]
+							},
+							options: {
+								responsive: true,
+								maintainAspectRatio: false
+							}
+						});
+
+						new Chart(document.getElementById("mentesChart"), {
+							type: "pie",
+							data: {
+								labels: chartData.mentesLabels,
+								datasets: [{
+									data: chartData.mentesCounts,
+									backgroundColor: palette
+								}]
+							},
+							options: {
+								responsive: true,
+								maintainAspectRatio: false
+							}
+						});
+					</script>
+
+<%- include("partials/footer") %>

@@ -1,0 +1,140 @@
+<%- include("partials/header", { pageTitle: "Adatbázis" }) %>
+
+					<section>
+						<header class="main">
+							<h1>Süteménykínálat (Adatbázis)</h1>
+							<p>
+								Az alábbi táblázat a MongoDB Atlas adatbázis <strong>3 kollekcióját</strong>
+								(<code>sutik</code>, <code>arak</code>, <code>tartalmak</code>) egyesíti Mongoose ODM segítségével.
+							</p>
+						</header>
+
+						<div class="stats-grid">
+							<div class="stat-card">
+								<span class="stat-value"><%= counts.sutik %></span>
+								<span class="stat-label">Suti kollekció</span>
+							</div>
+							<div class="stat-card">
+								<span class="stat-value"><%= counts.arak %></span>
+								<span class="stat-label">Ar kollekció</span>
+							</div>
+							<div class="stat-card">
+								<span class="stat-value"><%= counts.tartalmak %></span>
+								<span class="stat-label">Tartalom kollekció</span>
+							</div>
+							<div class="stat-card">
+								<span class="stat-value"><%= sutik.length %></span>
+								<span class="stat-label">Megjelenített találat</span>
+							</div>
+						</div>
+
+						<!-- Szuro urlap -->
+						<div class="filter-bar">
+							<form method="get" action="/adatbazis">
+								<div class="row gtr-uniform">
+									<div class="col-4 col-12-small">
+										<label for="kereses">Név keresése</label>
+										<input type="text" name="kereses" id="kereses" value="<%= filters.kereses %>" placeholder="pl. Dobos, Sacher..." />
+									</div>
+									<div class="col-3 col-12-small">
+										<label for="tipus">Típus</label>
+										<select name="tipus" id="tipus">
+											<option value="">-- Összes típus --</option>
+											<% tipusok.forEach(t => { %>
+												<option value="<%= t %>" <%= filters.tipus === t ? "selected" : "" %>><%= t %></option>
+											<% }) %>
+										</select>
+									</div>
+									<div class="col-3 col-12-small">
+										<label for="mentes">Mentes jelölés</label>
+										<select name="mentes" id="mentes">
+											<option value="">-- Mindegy --</option>
+											<% mentesOpcio.forEach(m => { %>
+												<option value="<%= m %>" <%= filters.mentes === m ? "selected" : "" %>><%= m %> – <%= mentesLeiras[m] || m %></option>
+											<% }) %>
+										</select>
+									</div>
+									<div class="col-2 col-12-small">
+										<label for="dijazott">Díjazott</label>
+										<select name="dijazott" id="dijazott">
+											<option value="">Mind</option>
+											<option value="1" <%= filters.dijazott === "1" ? "selected" : "" %>>Csak díjazott</option>
+										</select>
+									</div>
+									<div class="col-12">
+										<ul class="actions">
+											<li><button type="submit" class="button primary small">Szűrés</button></li>
+											<li><a href="/adatbazis" class="button small">Szűrők törlése</a></li>
+										</ul>
+									</div>
+								</div>
+							</form>
+						</div>
+
+						<p>
+							<strong>Mentes jelmagyarázat:</strong>
+							<span class="badge-free">G: Gluténmentes</span>
+							<span class="badge-free">L: Laktózmentes</span>
+							<span class="badge-free">HC: Hozzáadott cukormentes</span>
+							<span class="badge-free">Te: Tejmentes</span>
+							<span class="badge-free">To: Tojásmentes</span>
+							<span class="badge-free">É: Édesítőszerrel</span>
+						</p>
+
+						<div class="table-wrapper">
+							<table class="alt">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Sütemény neve</th>
+										<th>Típus</th>
+										<th>Díjazott</th>
+										<th>Árak és kiszerelések (Ar tábla)</th>
+										<th>Mentes jelölés (Tartalom tábla)</th>
+									</tr>
+								</thead>
+								<tbody>
+									<% if (sutik.length === 0) { %>
+										<tr>
+											<td colspan="6">Nincs a szűrési feltételeknek megfelelő sütemény.</td>
+										</tr>
+									<% } else { %>
+										<% sutik.forEach(s => { %>
+											<tr>
+												<td><%= s.sutiId %></td>
+												<td><strong><%= s.nev %></strong></td>
+												<td><%= s.tipus %></td>
+												<td>
+													<% if (s.dijazott) { %>
+														<span class="badge-award">Díjazott</span>
+													<% } else { %>
+														<span class="badge-normal">Nem</span>
+													<% } %>
+												</td>
+												<td>
+													<% if (s.arak.length === 0) { %>
+														<em>Nincs megadott ár</em>
+													<% } else { %>
+														<% s.arak.forEach((a, idx) => { %>
+															<span><%= a.ertek.toLocaleString("hu-HU") %> Ft / <%= a.egyseg %></span><%= idx < s.arak.length - 1 ? ", " : "" %>
+														<% }) %>
+													<% } %>
+												</td>
+												<td>
+													<% if (s.tartalmak.length === 0) { %>
+														<span class="badge-normal">-</span>
+													<% } else { %>
+														<% s.tartalmak.forEach(t => { %>
+															<span class="badge-free" title="<%= mentesLeiras[t] || t %>"><%= t %></span>
+														<% }) %>
+													<% } %>
+												</td>
+											</tr>
+										<% }) %>
+									<% } %>
+								</tbody>
+							</table>
+						</div>
+					</section>
+
+<%- include("partials/footer") %>
