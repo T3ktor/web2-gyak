@@ -101,3 +101,63 @@ exports.databaseIndex = async (req, res) => {
         res.status(500).send("Szerver hiba az adatbázis lekérdezésekor.");
     }
 };
+
+exports.diagramIndex = async (req, res) => {
+    try {
+        const [allSutik, allArak, allTartalmak] = await Promise.all([
+            Suti.find().lean(),
+            Ar.find().lean(),
+            Tartalom.find().lean()
+        ]);
+
+        const typeCountMap = new Map();
+        const sutiTypeById = new Map();
+        let awardedCount = 0;
+        let nonAwardedCount = 0;
+
+        allSutik.forEach((s) => {
+            sutiTypeById.set(s.sutiId, s.tipus);
+            typeCountMap.set(s.tipus, (typeCountMap.get(s.tipus) || 0) + 1);
+            if (s.dijazott) awardedCount++;
+            else nonAwardedCount++;
+        });
+
+        const priceSumMap = new Map();
+        const priceCntMap = new Map();
+        allArak.forEach((a) => {
+            const tipus = sutiTypeById.get(a.sutiId);
+            if (!tipus) return;
+            priceSumMap.set(tipus, (priceSumMap.get(tipus) || 0) + a.ertek);
+            priceCntMap.set(tipus, (priceCntMap.get(tipus) || 0) + 1);
+        });
+
+        const mentesMap = new Map();
+        allTartalmak.forEach((t) => {
+            const label = MENTES_LEIRAS[t.mentes]
+                ? `${t.mentes} (${MENTES_LEIRAS[t.mentes]})`
+                : t.mentes;
+            mentesMap.set(label, (mentesMap.get(label) || 0) + 1);
+        });
+
+        const sortedTypes = [...typeCountMap.entries()].sort((a, b) => b[1] - a[1]);
+        const priceEntries = [...priceSumMap.entries()]
+            .map(([tipus, sum]) => [tipus, Math.round(sum / priceCntMap.get(tipus))])
+            .sort((a, b) => b[1] - a[1]);
+
+        res.render("diagram", {
+            chartData: {
+                typeLabels: sortedTypes.map(([k]) => k),
+                typeCounts: sortedTypes.map(([, v]) => v),
+                priceLabels: priceEntries.map(([k]) => k),
+                avgPrices: priceEntries.map(([, v]) => v),
+                awardedCount,
+                nonAwardedCount,
+                mentesLabels: [...mentesMap.keys()],
+                mentesCounts: [...mentesMap.values()]
+            }
+        });
+    } catch (err) {
+        console.error("Diagram oldal hiba:", err);
+        res.status(500).send("Szerver hiba a diagram adatainak betöltésekor.");
+    }
+};
