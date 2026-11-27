@@ -29,3 +29,13 @@ exports.contactPost = async (req, res) => {
         return res.redirect("/kapcsolat");
     }
 };
+
+exports.messagesIndex = async (req, res) => {
+    try {
+        const messages = await Message.find().sort({ kuldesIdeje: -1 }).lean();
+        res.render("messages", { messages });
+    } catch (err) {
+        console.error("Uzenetek lekeresi hiba:", err);
+        res.status(500).send("Szerver hiba az üzenetek betöltésekor.");
+    }
+};
