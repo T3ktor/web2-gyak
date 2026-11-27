@@ -1,0 +1,57 @@
+<%- include("../partials/header", { pageTitle: "CRUD – Sütemények kezelése" }) %>
+
+					<section>
+						<header class="main">
+							<h1>Sütemények kezelése (CRUD)</h1>
+							<p>Adminisztrátori felület a <code>sutik</code> kollekció adatainak létrehozásához, megtekintéséhez, módosításához és törléséhez.</p>
+						</header>
+
+						<ul class="actions">
+							<li><a href="/crud/new" class="button primary">+ Új sütemény hozzáadása</a></li>
+							<li><a href="/adatbazis" class="button">Publikus Adatbázis nézet</a></li>
+						</ul>
+
+						<div class="table-wrapper">
+							<table class="alt">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Sütemény neve</th>
+										<th>Típus</th>
+										<th>Díjazott</th>
+										<th>Műveletek</th>
+									</tr>
+								</thead>
+								<tbody>
+									<% if (sutik.length === 0) { %>
+										<tr>
+											<td colspan="5">Nincs megjeleníthető sütemény az adatbázisban.</td>
+										</tr>
+									<% } else { %>
+										<% sutik.forEach(s => { %>
+											<tr>
+												<td><%= s.sutiId %></td>
+												<td><strong><%= s.nev %></strong></td>
+												<td><%= s.tipus %></td>
+												<td>
+													<% if (s.dijazott) { %>
+														<span class="badge-award">Igen</span>
+													<% } else { %>
+														<span class="badge-normal">Nem</span>
+													<% } %>
+												</td>
+												<td class="action-cell">
+													<a href="/crud/edit/<%= s._id %>" class="button small-btn">Edit</a>
+													<form method="post" action="/crud/delete/<%= s._id %>" onsubmit="return confirm('Biztosan törölni szeretné ezt a süteményt: <%= s.nev %>?');">
+														<button type="submit" class="button primary small-btn">Delete</button>
+													</form>
+												</td>
+											</tr>
+										<% }) %>
+									<% } %>
+								</tbody>
+							</table>
+						</div>
+					</section>
+
+<%- include("../partials/footer") %>

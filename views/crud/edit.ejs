@@ -1,0 +1,48 @@
+<%- include("../partials/header", { pageTitle: "Sütemény szerkesztése" }) %>
+
+					<section>
+						<header class="main">
+							<h1>Sütemény szerkesztése</h1>
+							<p>Azonosító (<code>sutiId</code>): <strong><%= suti.sutiId %></strong></p>
+						</header>
+
+						<div class="row">
+							<div class="col-6 col-12-small">
+								<form method="post" action="/crud/update/<%= suti._id %>" novalidate>
+									<div class="row gtr-uniform">
+										<div class="col-12">
+											<label for="nev">Sütemény neve *</label>
+											<input type="text" name="nev" id="nev" value="<%= formData.nev !== undefined ? formData.nev : suti.nev %>" />
+											<% if (errors.nev) { %>
+												<span class="field-error"><%= errors.nev.message %></span>
+											<% } %>
+										</div>
+										<div class="col-12">
+											<label for="tipus">Típus *</label>
+											<input type="text" name="tipus" id="tipus" list="tipus-lista" value="<%= formData.tipus !== undefined ? formData.tipus : suti.tipus %>" />
+											<datalist id="tipus-lista">
+												<% tipusok.forEach(t => { %>
+													<option value="<%= t %>"></option>
+												<% }) %>
+											</datalist>
+											<% if (errors.tipus) { %>
+												<span class="field-error"><%= errors.tipus.message %></span>
+											<% } %>
+										</div>
+										<div class="col-12">
+											<input type="checkbox" id="dijazott" name="dijazott" value="1" <%= (formData.dijazott !== undefined ? formData.dijazott : suti.dijazott) ? "checked" : "" %> />
+											<label for="dijazott">Díjazott a Magyarország Tortája versenyen</label>
+										</div>
+										<div class="col-12">
+											<ul class="actions">
+												<li><button type="submit" class="button primary">Módosítások mentése</button></li>
+												<li><a href="/crud" class="button">Mégse</a></li>
+											</ul>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</section>
+
+<%- include("../partials/footer") %>
