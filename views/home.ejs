@@ -1,0 +1,119 @@
+<%- include("partials/header", { pageTitle: "Főoldal" }) %>
+
+					<!-- Banner -->
+					<section id="banner">
+						<div class="content">
+							<header>
+								<h1>Édes Harmónia<br />
+								Kézműves Cukrászda</h1>
+								<p>Hagyományos magyar cukrászat és modern mentes desszertek egy helyen</p>
+							</header>
+							<p>
+								Üdvözöljük webalkalmazásunkban! Az <strong>Édes Harmónia Cukrászda</strong> kínálatában
+								több mint <strong><%= stats.sutiCount %> féle kézműves sütemény</strong>, torta, krémes és
+								különleges teasütemény található meg, köztük a Magyarország Tortája versenyen díjazott
+								alkotásokkal és speciális étrendbe illeszthető mentes finomságokkal.
+							</p>
+							<ul class="actions">
+								<li><a href="/adatbazis" class="button big primary">Kínálat megtekintése</a></li>
+								<li><a href="/diagram" class="button big">Statisztikák &amp; Diagramok</a></li>
+							</ul>
+						</div>
+						<span class="image object">
+							<img src="/images/cukraszda-banner.jpg" alt="Édes Harmónia Cukrászda pultja" />
+						</span>
+					</section>
+
+					<!-- Osszefoglalo szamok -->
+					<section>
+						<div class="stats-grid">
+							<div class="stat-card">
+								<span class="stat-value"><%= stats.sutiCount %></span>
+								<span class="stat-label">Sütemény az adatbázisban</span>
+							</div>
+							<div class="stat-card">
+								<span class="stat-value"><%= stats.arCount %></span>
+								<span class="stat-label">Ár és kiszerelés</span>
+							</div>
+							<div class="stat-card">
+								<span class="stat-value"><%= stats.tartalomCount %></span>
+								<span class="stat-label">Mentes minősítés</span>
+							</div>
+							<div class="stat-card">
+								<span class="stat-value"><%= stats.dijazottCount %></span>
+								<span class="stat-label">Díjazott sütemény</span>
+							</div>
+						</div>
+					</section>
+
+					<!-- Szolgaltatasok / Funkciok -->
+					<section>
+						<header class="major">
+							<h2>Alkalmazásunk főbb funkciói</h2>
+						</header>
+						<div class="features">
+							<article>
+								<span class="icon solid fa-birthday-cake"></span>
+								<div class="content">
+									<h3>3 táblás MongoDB kínálat</h3>
+									<p>Az <a href="/adatbazis">Adatbázis</a> menüpontban a sütemények, a különböző kiszerelések árai és az allergén-mentes jelölések Mongoose ODM-mel összekapcsolva böngészhetők.</p>
+								</div>
+							</article>
+							<article>
+								<span class="icon solid fa-chart-pie"></span>
+								<div class="content">
+									<h3>Interaktív Chart.js diagramok</h3>
+									<p>A <a href="/diagram">Diagram</a> oldalon valós adatbázis-adatok alapján elemezzük a süteménytípusok megoszlását, az átlagárakat és a mentes kínálatot.</p>
+								</div>
+							</article>
+							<article>
+								<span class="icon solid fa-envelope-open-text"></span>
+								<div class="content">
+									<h3>Validált kapcsolatfelvétel</h3>
+									<p>A <a href="/kapcsolat">Kapcsolat</a> űrlapon szerver oldali validációval ellátott üzenet küldhető, amelyet a bejelentkezett felhasználók az <a href="/uzenetek">Üzenetek</a> menüben követhetnek.</p>
+								</div>
+							</article>
+							<article>
+								<span class="icon solid fa-user-shield"></span>
+								<div class="content">
+									<h3>Szerepkör alapú jogosultság &amp; CRUD</h3>
+									<p>Session-alapú autentikáció látogató, regisztrált felhasználó és adminisztrátor szerepkörökkel. Az admin a <a href="/crud">CRUD</a> felületen kezelheti a süteményeket.</p>
+								</div>
+							</article>
+						</div>
+					</section>
+
+					<!-- Kiemelt kategoriak -->
+					<section>
+						<header class="major">
+							<h2>Kiemelt kategóriák kínálatunkból</h2>
+						</header>
+						<div class="posts">
+							<article>
+								<a href="/adatbazis?tipus=torta" class="image"><img src="/images/torta-card.jpg" alt="Kézműves torták" /></a>
+								<h3>Klasszikus és különleges torták</h3>
+								<p>Ünnepi alkalmakra, 8, 12, 16 vagy akár 24 szeletes kiszerelésben, hagyományos magyar receptúrák alapján.</p>
+								<ul class="actions">
+									<li><a href="/adatbazis?tipus=torta" class="button">Torták szűrése</a></li>
+								</ul>
+							</article>
+							<article>
+								<a href="/adatbazis?tipus=kr%C3%A9mes" class="image"><img src="/images/kremes-card.jpg" alt="Friss krémesek" /></a>
+								<h3>Krémesek és tejszínes desszertek</h3>
+								<p>Ropogós leveles tészta, lágy vaníliakrém és könnyed habok, amelyek mindennap frissen kerülnek a pultba.</p>
+								<ul class="actions">
+									<li><a href="/adatbazis?tipus=kr%C3%A9mes" class="button">Krémesek szűrése</a></li>
+								</ul>
+							</article>
+							<article>
+								<a href="/adatbazis?mentes=G" class="image"><img src="/images/mentes-card.jpg" alt="Mentes sütemények" /></a>
+								<h3>Glutén-, laktóz- és cukormentes</h3>
+								<p>Speciális táplálkozási igényeket követő vendégeink számára külön jelöljük a G, L, HC, Te, To és É minősítéseket.</p>
+								<ul class="actions">
+									<li><a href="/adatbazis?mentes=G" class="button">Mentes kínálat</a></li>
+								</ul>
+							</article>
+						</div>
+					</section>
+
+<%- include("partials/footer") %>
